@@ -558,12 +558,13 @@ package body Test_Disk_Scheduling is
       
       -- Test 2: LOOK vs C-LOOK
       declare
-         Requests : constant Cylinder_Array := (1 => 10, 2 => 20, 3 => 30);
+         Requests : constant Cylinder_Array := (1 => 10, 2 => 20, 3 => 60, 4 => 80);
          Start_Head : constant Cylinder := 50;
+         LOOK_Result : constant Cylinder_Array := LOOK (Requests, Start_Head, Up);
+         CLOOK_Result : constant Cylinder_Array := C_LOOK (Requests, Start_Head, Up);
       begin
          Run_Test ("LOOK_vs_CLOOK_Differ", 
-                  LOOK (Requests, Start_Head, Up)'Length /=
-                  C_LOOK (Requests, Start_Head, Up)'Length);
+                  not Arrays_Equal (LOOK_Result, CLOOK_Result));
       end;
       
       -- Test 3: SCAN vs LOOK

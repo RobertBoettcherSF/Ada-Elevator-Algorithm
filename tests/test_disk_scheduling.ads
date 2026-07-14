@@ -1,8 +1,6 @@
 -- Version: 0.02
 -- Test specifications for Disk Scheduling Algorithms
 
-with Disk_Scheduling;
-
 package Test_Disk_Scheduling is
 
    -- Test result type

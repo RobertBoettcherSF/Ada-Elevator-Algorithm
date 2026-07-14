@@ -1,4 +1,4 @@
--- Version: 0.01
+-- Version: 0.02
 -- Test Project File for Disk Scheduling Algorithms
 -- 
 -- To build and run tests:
@@ -15,7 +15,7 @@ project Test_Project is
    for Create_Missing_Dirs use "True";
    
    -- Main executable
-   for Executable ("run_tests") use "tests/run_tests.adb";
+   for Main use ("tests/run_tests.adb");
    
    -- Compiler options
    package Compiler is

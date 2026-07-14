@@ -1,3 +1,8 @@
+-- Version: 0.01
+-- Disk Scheduling Algorithm Specifications
+-- 
+-- This package provides disk scheduling algorithms (Elevator Algorithm and variants).
+
 package Disk_Scheduling is
 
    type Cylinder is new Natural;

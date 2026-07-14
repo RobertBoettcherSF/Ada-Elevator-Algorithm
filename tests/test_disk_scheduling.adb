@@ -1,4 +1,4 @@
--- Version: 0.06
+-- Version: 0.07
 -- Test implementations for Disk Scheduling Algorithms
 
 with Ada.Text_IO;

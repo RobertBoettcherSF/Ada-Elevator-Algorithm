@@ -373,8 +373,8 @@ package body Test_Disk_Scheduling is
       
       -- Test 1: Basic F-SCAN
       declare
-         Active_Queue : constant Cylinder_Array := (1 => 98, 2 => 183, 3 => 37, 4 => 122);
-         Waiting_Queue : constant Cylinder_Array := (1 => 14, 2 => 124, 3 => 65, 4 => 67);
+         Active_Queue : constant Cylinder_Array (1..50) := (1 => 98, 2 => 183, 3 => 37, 4 => 122);
+         Waiting_Queue : constant Cylinder_Array (1..50) := (1 => 14, 2 => 124, 3 => 65, 4 => 67);
          Start_Head : constant Cylinder := 53;
          Max_Cylinder : constant Cylinder := 199;
          Expected : constant Cylinder_Array := (1 => 98, 2 => 122, 3 => 183, 4 => 199, 5 => 37, 6 => 14, 7 => 0, 8 => 65, 9 => 67, 10 => 124);
@@ -387,7 +387,7 @@ package body Test_Disk_Scheduling is
       -- Test 2: F-SCAN Empty Active
       declare
          Active_Queue : constant Cylinder_Array (1..0) := (others => 0);
-         Waiting_Queue : constant Cylinder_Array := (1 => 10, 2 => 20, 3 => 30);
+         Waiting_Queue : constant Cylinder_Array (1..50) := (1 => 10, 2 => 20, 3 => 30);
          Start_Head : constant Cylinder := 50;
          Max_Cylinder : constant Cylinder := 100;
          Expected : constant Cylinder_Array := (1 => 100, 2 => 30, 3 => 20, 4 => 10);
@@ -399,7 +399,7 @@ package body Test_Disk_Scheduling is
       
       -- Test 3: F-SCAN Empty Waiting
       declare
-         Active_Queue : constant Cylinder_Array := (1 => 10, 2 => 20, 3 => 30);
+         Active_Queue : constant Cylinder_Array (1..50) := (1 => 10, 2 => 20, 3 => 30);
          Waiting_Queue : constant Cylinder_Array (1..0) := (others => 0);
          Start_Head : constant Cylinder := 50;
          Max_Cylinder : constant Cylinder := 100;
@@ -577,8 +577,8 @@ package body Test_Disk_Scheduling is
       
       -- Test 5: F-SCAN Processes Waiting
       declare
-         Active_Queue : constant Cylinder_Array := (1 => 100);
-         Waiting_Queue : constant Cylinder_Array := (1 => 200);
+         Active_Queue : constant Cylinder_Array (1..50) := (1 => 100);
+         Waiting_Queue : constant Cylinder_Array (1..50) := (1 => 200);
          Start_Head : constant Cylinder := 50;
          Max_Cylinder : constant Cylinder := 300;
          Result : Cylinder_Array (1..100);

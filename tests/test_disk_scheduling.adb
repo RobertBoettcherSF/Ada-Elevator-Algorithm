@@ -1,4 +1,4 @@
--- Version: 0.09
+-- Version: 0.10
 -- Test implementations for Disk Scheduling Algorithms
 
 with Ada.Text_IO;
@@ -68,10 +68,8 @@ package body Test_Disk_Scheduling is
          Start_Head : constant Cylinder := 53;
          Max_Cylinder : constant Cylinder := 199;
          Expected : constant Cylinder_Array := (1 => 65, 2 => 67, 3 => 98, 4 => 122, 5 => 124, 6 => 183, 7 => 199, 8 => 37, 9 => 14);
-         Result : Cylinder_Array;
       begin
-         Result := SCAN (Requests, Start_Head, Up, Max_Cylinder);
-         Run_Test ("SCAN_Basic_UP", Arrays_Equal (Result, Expected));
+         Run_Test ("SCAN_Basic_UP", Arrays_Equal (SCAN (Requests, Start_Head, Up, Max_Cylinder), Expected));
       end;
       
       -- Test 2: SCAN Empty
@@ -79,10 +77,8 @@ package body Test_Disk_Scheduling is
          Requests : constant Cylinder_Array (1..0) := (others => 0);
          Start_Head : constant Cylinder := 50;
          Max_Cylinder : constant Cylinder := 100;
-         Result : Cylinder_Array;
       begin
-         Result := SCAN (Requests, Start_Head, Up, Max_Cylinder);
-         Run_Test ("SCAN_Empty", Result'Length = 0);
+         Run_Test ("SCAN_Empty", SCAN (Requests, Start_Head, Up, Max_Cylinder)'Length = 0);
       end;
       
       -- Test 3: SCAN All Right
@@ -91,10 +87,8 @@ package body Test_Disk_Scheduling is
          Start_Head : constant Cylinder := 50;
          Max_Cylinder : constant Cylinder := 300;
          Expected : constant Cylinder_Array := (1 => 100, 2 => 150, 3 => 200, 4 => 300);
-         Result : Cylinder_Array;
       begin
-         Result := SCAN (Requests, Start_Head, Up, Max_Cylinder);
-         Run_Test ("SCAN_All_Right", Arrays_Equal (Result, Expected));
+         Run_Test ("SCAN_All_Right", Arrays_Equal (SCAN (Requests, Start_Head, Up, Max_Cylinder), Expected));
       end;
       
       -- Test 4: SCAN All Left
@@ -103,10 +97,8 @@ package body Test_Disk_Scheduling is
          Start_Head : constant Cylinder := 50;
          Max_Cylinder : constant Cylinder := 100;
          Expected : constant Cylinder_Array := (1 => 100, 2 => 30, 3 => 20, 4 => 10);
-         Result : Cylinder_Array;
       begin
-         Result := SCAN (Requests, Start_Head, Up, Max_Cylinder);
-         Run_Test ("SCAN_All_Left", Arrays_Equal (Result, Expected));
+         Run_Test ("SCAN_All_Left", Arrays_Equal (SCAN (Requests, Start_Head, Up, Max_Cylinder), Expected));
       end;
       
       -- Test 5: SCAN Head at Zero
@@ -115,10 +107,8 @@ package body Test_Disk_Scheduling is
          Start_Head : constant Cylinder := 0;
          Max_Cylinder : constant Cylinder := 100;
          Expected : constant Cylinder_Array := (1 => 10, 2 => 20, 3 => 30, 4 => 100);
-         Result : Cylinder_Array;
       begin
-         Result := SCAN (Requests, Start_Head, Up, Max_Cylinder);
-         Run_Test ("SCAN_Head_At_Zero", Arrays_Equal (Result, Expected));
+         Run_Test ("SCAN_Head_At_Zero", Arrays_Equal (SCAN (Requests, Start_Head, Up, Max_Cylinder), Expected));
       end;
       
       -- Test 6: SCAN Head at Max
@@ -127,10 +117,8 @@ package body Test_Disk_Scheduling is
          Start_Head : constant Cylinder := 100;
          Max_Cylinder : constant Cylinder := 100;
          Expected : constant Cylinder_Array := (1 => 100, 2 => 30, 3 => 20, 4 => 10);
-         Result : Cylinder_Array;
       begin
-         Result := SCAN (Requests, Start_Head, Up, Max_Cylinder);
-         Run_Test ("SCAN_Head_At_Max", Arrays_Equal (Result, Expected));
+         Run_Test ("SCAN_Head_At_Max", Arrays_Equal (SCAN (Requests, Start_Head, Up, Max_Cylinder), Expected));
       end;
       
       -- Test 7: SCAN Single Request
@@ -139,10 +127,8 @@ package body Test_Disk_Scheduling is
          Start_Head : constant Cylinder := 100;
          Max_Cylinder : constant Cylinder := 200;
          Expected : constant Cylinder_Array := (1 => 200, 2 => 50);
-         Result : Cylinder_Array;
       begin
-         Result := SCAN (Requests, Start_Head, Up, Max_Cylinder);
-         Run_Test ("SCAN_Single_Request", Arrays_Equal (Result, Expected));
+         Run_Test ("SCAN_Single_Request", Arrays_Equal (SCAN (Requests, Start_Head, Up, Max_Cylinder), Expected));
       end;
       
       -- Test 8: SCAN Down Direction
@@ -151,10 +137,8 @@ package body Test_Disk_Scheduling is
          Start_Head : constant Cylinder := 53;
          Max_Cylinder : constant Cylinder := 199;
          Expected : constant Cylinder_Array := (1 => 37, 2 => 14, 3 => 0, 4 => 65, 5 => 67, 6 => 98, 7 => 122, 8 => 124, 9 => 183);
-         Result : Cylinder_Array;
       begin
-         Result := SCAN (Requests, Start_Head, Down, Max_Cylinder);
-         Run_Test ("SCAN_Down_Direction", Arrays_Equal (Result, Expected));
+         Run_Test ("SCAN_Down_Direction", Arrays_Equal (SCAN (Requests, Start_Head, Down, Max_Cylinder), Expected));
       end;
    end Test_SCAN_Algorithm;
 
@@ -172,10 +156,8 @@ package body Test_Disk_Scheduling is
          Start_Head : constant Cylinder := 53;
          Max_Cylinder : constant Cylinder := 199;
          Expected : constant Cylinder_Array := (1 => 65, 2 => 67, 3 => 98, 4 => 122, 5 => 124, 6 => 183, 7 => 199, 8 => 0, 9 => 14, 10 => 37);
-         Result : Cylinder_Array;
       begin
-         Result := C_SCAN (Requests, Start_Head, Up, Max_Cylinder);
-         Run_Test ("C_SCAN_Basic_UP", Arrays_Equal (Result, Expected));
+         Run_Test ("C_SCAN_Basic_UP", Arrays_Equal (C_SCAN (Requests, Start_Head, Up, Max_Cylinder), Expected));
       end;
       
       -- Test 2: C-SCAN Empty
@@ -183,10 +165,8 @@ package body Test_Disk_Scheduling is
          Requests : constant Cylinder_Array (1..0) := (others => 0);
          Start_Head : constant Cylinder := 50;
          Max_Cylinder : constant Cylinder := 100;
-         Result : Cylinder_Array;
       begin
-         Result := C_SCAN (Requests, Start_Head, Up, Max_Cylinder);
-         Run_Test ("C_SCAN_Empty", Result'Length = 0);
+         Run_Test ("C_SCAN_Empty", C_SCAN (Requests, Start_Head, Up, Max_Cylinder)'Length = 0);
       end;
       
       -- Test 3: C-SCAN All Right
@@ -195,10 +175,8 @@ package body Test_Disk_Scheduling is
          Start_Head : constant Cylinder := 50;
          Max_Cylinder : constant Cylinder := 200;
          Expected : constant Cylinder_Array := (1 => 100, 2 => 150, 3 => 200, 4 => 200, 5 => 0);
-         Result : Cylinder_Array;
       begin
-         Result := C_SCAN (Requests, Start_Head, Up, Max_Cylinder);
-         Run_Test ("C_SCAN_All_Right", Arrays_Equal (Result, Expected));
+         Run_Test ("C_SCAN_All_Right", Arrays_Equal (C_SCAN (Requests, Start_Head, Up, Max_Cylinder), Expected));
       end;
       
       -- Test 4: C-SCAN All Left
@@ -207,10 +185,8 @@ package body Test_Disk_Scheduling is
          Start_Head : constant Cylinder := 50;
          Max_Cylinder : constant Cylinder := 100;
          Expected : constant Cylinder_Array := (1 => 100, 2 => 0, 3 => 10, 4 => 20, 5 => 30);
-         Result : Cylinder_Array;
       begin
-         Result := C_SCAN (Requests, Start_Head, Up, Max_Cylinder);
-         Run_Test ("C_SCAN_All_Left", Arrays_Equal (Result, Expected));
+         Run_Test ("C_SCAN_All_Left", Arrays_Equal (C_SCAN (Requests, Start_Head, Up, Max_Cylinder), Expected));
       end;
       
       -- Test 5: C-SCAN Down Direction
@@ -219,10 +195,8 @@ package body Test_Disk_Scheduling is
          Start_Head : constant Cylinder := 53;
          Max_Cylinder : constant Cylinder := 199;
          Expected : constant Cylinder_Array := (1 => 37, 2 => 14, 3 => 0, 4 => 199, 5 => 183, 6 => 124, 7 => 122, 8 => 98, 9 => 67, 10 => 65);
-         Result : Cylinder_Array;
       begin
-         Result := C_SCAN (Requests, Start_Head, Down, Max_Cylinder);
-         Run_Test ("C_SCAN_Down_Direction", Arrays_Equal (Result, Expected));
+         Run_Test ("C_SCAN_Down_Direction", Arrays_Equal (C_SCAN (Requests, Start_Head, Down, Max_Cylinder), Expected));
       end;
    end Test_C_SCAN_Algorithm;
 
@@ -239,20 +213,16 @@ package body Test_Disk_Scheduling is
          Requests : constant Cylinder_Array := (1 => 98, 2 => 183, 3 => 37, 4 => 122, 5 => 14, 6 => 124, 7 => 65, 8 => 67);
          Start_Head : constant Cylinder := 53;
          Expected : constant Cylinder_Array := (1 => 65, 2 => 67, 3 => 98, 4 => 122, 5 => 124, 6 => 183, 7 => 37, 8 => 14);
-         Result : Cylinder_Array;
       begin
-         Result := LOOK (Requests, Start_Head, Up);
-         Run_Test ("LOOK_Basic_UP", Arrays_Equal (Result, Expected));
+         Run_Test ("LOOK_Basic_UP", Arrays_Equal (LOOK (Requests, Start_Head, Up), Expected));
       end;
       
       -- Test 2: LOOK Empty
       declare
          Requests : constant Cylinder_Array (1..0) := (others => 0);
          Start_Head : constant Cylinder := 50;
-         Result : Cylinder_Array;
       begin
-         Result := LOOK (Requests, Start_Head, Up);
-         Run_Test ("LOOK_Empty", Result'Length = 0);
+         Run_Test ("LOOK_Empty", LOOK (Requests, Start_Head, Up)'Length = 0);
       end;
       
       -- Test 3: LOOK All Right
@@ -260,10 +230,8 @@ package body Test_Disk_Scheduling is
          Requests : constant Cylinder_Array := (1 => 100, 2 => 150, 3 => 200);
          Start_Head : constant Cylinder := 50;
          Expected : constant Cylinder_Array := (1 => 100, 2 => 150, 3 => 200);
-         Result : Cylinder_Array;
       begin
-         Result := LOOK (Requests, Start_Head, Up);
-         Run_Test ("LOOK_All_Right", Arrays_Equal (Result, Expected));
+         Run_Test ("LOOK_All_Right", Arrays_Equal (LOOK (Requests, Start_Head, Up), Expected));
       end;
       
       -- Test 4: LOOK All Left
@@ -271,10 +239,8 @@ package body Test_Disk_Scheduling is
          Requests : constant Cylinder_Array := (1 => 10, 2 => 20, 3 => 30);
          Start_Head : constant Cylinder := 50;
          Expected : constant Cylinder_Array := (1 => 30, 2 => 20, 3 => 10);
-         Result : Cylinder_Array;
       begin
-         Result := LOOK (Requests, Start_Head, Up);
-         Run_Test ("LOOK_All_Left", Arrays_Equal (Result, Expected));
+         Run_Test ("LOOK_All_Left", Arrays_Equal (LOOK (Requests, Start_Head, Up), Expected));
       end;
       
       -- Test 5: LOOK Single Request
@@ -282,10 +248,8 @@ package body Test_Disk_Scheduling is
          Requests : constant Cylinder_Array := (1 => 50);
          Start_Head : constant Cylinder := 100;
          Expected : constant Cylinder_Array := (1 => 50);
-         Result : Cylinder_Array;
       begin
-         Result := LOOK (Requests, Start_Head, Up);
-         Run_Test ("LOOK_Single_Request", Arrays_Equal (Result, Expected));
+         Run_Test ("LOOK_Single_Request", Arrays_Equal (LOOK (Requests, Start_Head, Up), Expected));
       end;
       
       -- Test 6: LOOK Down Direction
@@ -293,10 +257,8 @@ package body Test_Disk_Scheduling is
          Requests : constant Cylinder_Array := (1 => 98, 2 => 183, 3 => 37, 4 => 122, 5 => 14, 6 => 124, 7 => 65, 8 => 67);
          Start_Head : constant Cylinder := 53;
          Expected : constant Cylinder_Array := (1 => 37, 2 => 14, 3 => 65, 4 => 67, 5 => 98, 6 => 122, 7 => 124, 8 => 183);
-         Result : Cylinder_Array;
       begin
-         Result := LOOK (Requests, Start_Head, Down);
-         Run_Test ("LOOK_Down_Direction", Arrays_Equal (Result, Expected));
+         Run_Test ("LOOK_Down_Direction", Arrays_Equal (LOOK (Requests, Start_Head, Down), Expected));
       end;
    end Test_LOOK_Algorithm;
 
@@ -313,20 +275,16 @@ package body Test_Disk_Scheduling is
          Requests : constant Cylinder_Array := (1 => 98, 2 => 183, 3 => 37, 4 => 122, 5 => 14, 6 => 124, 7 => 65, 8 => 67);
          Start_Head : constant Cylinder := 53;
          Expected : constant Cylinder_Array := (1 => 65, 2 => 67, 3 => 98, 4 => 122, 5 => 124, 6 => 183, 7 => 14, 8 => 37);
-         Result : Cylinder_Array;
       begin
-         Result := C_LOOK (Requests, Start_Head, Up);
-         Run_Test ("C_LOOK_Basic_UP", Arrays_Equal (Result, Expected));
+         Run_Test ("C_LOOK_Basic_UP", Arrays_Equal (C_LOOK (Requests, Start_Head, Up), Expected));
       end;
       
       -- Test 2: C-LOOK Empty
       declare
          Requests : constant Cylinder_Array (1..0) := (others => 0);
          Start_Head : constant Cylinder := 50;
-         Result : Cylinder_Array;
       begin
-         Result := C_LOOK (Requests, Start_Head, Up);
-         Run_Test ("C_LOOK_Empty", Result'Length = 0);
+         Run_Test ("C_LOOK_Empty", C_LOOK (Requests, Start_Head, Up)'Length = 0);
       end;
       
       -- Test 3: C-LOOK All Right
@@ -334,10 +292,8 @@ package body Test_Disk_Scheduling is
          Requests : constant Cylinder_Array := (1 => 100, 2 => 150, 3 => 200);
          Start_Head : constant Cylinder := 50;
          Expected : constant Cylinder_Array := (1 => 100, 2 => 150, 3 => 200);
-         Result : Cylinder_Array;
       begin
-         Result := C_LOOK (Requests, Start_Head, Up);
-         Run_Test ("C_LOOK_All_Right", Arrays_Equal (Result, Expected));
+         Run_Test ("C_LOOK_All_Right", Arrays_Equal (C_LOOK (Requests, Start_Head, Up), Expected));
       end;
       
       -- Test 4: C-LOOK All Left
@@ -345,10 +301,8 @@ package body Test_Disk_Scheduling is
          Requests : constant Cylinder_Array := (1 => 10, 2 => 20, 3 => 30);
          Start_Head : constant Cylinder := 50;
          Expected : constant Cylinder_Array := (1 => 10, 2 => 20, 3 => 30);
-         Result : Cylinder_Array;
       begin
-         Result := C_LOOK (Requests, Start_Head, Up);
-         Run_Test ("C_LOOK_All_Left", Arrays_Equal (Result, Expected));
+         Run_Test ("C_LOOK_All_Left", Arrays_Equal (C_LOOK (Requests, Start_Head, Up), Expected));
       end;
       
       -- Test 5: C-LOOK Down Direction
@@ -356,10 +310,8 @@ package body Test_Disk_Scheduling is
          Requests : constant Cylinder_Array := (1 => 98, 2 => 183, 3 => 37, 4 => 122, 5 => 14, 6 => 124, 7 => 65, 8 => 67);
          Start_Head : constant Cylinder := 53;
          Expected : constant Cylinder_Array := (1 => 37, 2 => 14, 3 => 183, 4 => 124, 5 => 122, 6 => 98, 7 => 67, 8 => 65);
-         Result : Cylinder_Array;
       begin
-         Result := C_LOOK (Requests, Start_Head, Down);
-         Run_Test ("C_LOOK_Down_Direction", Arrays_Equal (Result, Expected));
+         Run_Test ("C_LOOK_Down_Direction", Arrays_Equal (C_LOOK (Requests, Start_Head, Down), Expected));
       end;
    end Test_C_LOOK_Algorithm;
 
@@ -378,10 +330,8 @@ package body Test_Disk_Scheduling is
          Start_Head : constant Cylinder := 53;
          Max_Cylinder : constant Cylinder := 199;
          Expected : constant Cylinder_Array := (1 => 98, 2 => 122, 3 => 183, 4 => 199, 5 => 37, 6 => 14, 7 => 0, 8 => 65, 9 => 67, 10 => 124);
-         Result : Cylinder_Array;
       begin
-         Result := F_SCAN (Active_Queue, Waiting_Queue, Start_Head, Up, Max_Cylinder);
-         Run_Test ("F_SCAN_Basic", Arrays_Equal (Result, Expected));
+         Run_Test ("F_SCAN_Basic", Arrays_Equal (F_SCAN (Active_Queue, Waiting_Queue, Start_Head, Up, Max_Cylinder), Expected));
       end;
       
       -- Test 2: F-SCAN Empty Active
@@ -391,10 +341,8 @@ package body Test_Disk_Scheduling is
          Start_Head : constant Cylinder := 50;
          Max_Cylinder : constant Cylinder := 100;
          Expected : constant Cylinder_Array := (1 => 100, 2 => 30, 3 => 20, 4 => 10);
-         Result : Cylinder_Array;
       begin
-         Result := F_SCAN (Active_Queue, Waiting_Queue, Start_Head, Up, Max_Cylinder);
-         Run_Test ("F_SCAN_Empty_Active", Arrays_Equal (Result, Expected));
+         Run_Test ("F_SCAN_Empty_Active", Arrays_Equal (F_SCAN (Active_Queue, Waiting_Queue, Start_Head, Up, Max_Cylinder), Expected));
       end;
       
       -- Test 3: F-SCAN Empty Waiting
@@ -404,10 +352,8 @@ package body Test_Disk_Scheduling is
          Start_Head : constant Cylinder := 50;
          Max_Cylinder : constant Cylinder := 100;
          Expected : constant Cylinder_Array := (1 => 100, 2 => 30, 3 => 20, 4 => 10);
-         Result : Cylinder_Array;
       begin
-         Result := F_SCAN (Active_Queue, Waiting_Queue, Start_Head, Up, Max_Cylinder);
-         Run_Test ("F_SCAN_Empty_Waiting", Arrays_Equal (Result, Expected));
+         Run_Test ("F_SCAN_Empty_Waiting", Arrays_Equal (F_SCAN (Active_Queue, Waiting_Queue, Start_Head, Up, Max_Cylinder), Expected));
       end;
       
       -- Test 4: F-SCAN Both Empty
@@ -416,10 +362,8 @@ package body Test_Disk_Scheduling is
          Waiting_Queue : constant Cylinder_Array (1..0) := (others => 0);
          Start_Head : constant Cylinder := 50;
          Max_Cylinder : constant Cylinder := 100;
-         Result : Cylinder_Array;
       begin
-         Result := F_SCAN (Active_Queue, Waiting_Queue, Start_Head, Up, Max_Cylinder);
-         Run_Test ("F_SCAN_Both_Empty", Result'Length = 0);
+         Run_Test ("F_SCAN_Both_Empty", F_SCAN (Active_Queue, Waiting_Queue, Start_Head, Up, Max_Cylinder)'Length = 0);
       end;
    end Test_F_SCAN_Algorithm;
 
@@ -506,11 +450,9 @@ package body Test_Disk_Scheduling is
          Requests : constant Cylinder_Array := (1 => 100, 2 => 200);
          Start_Head : constant Cylinder := 50;
          Max_Cylinder : constant Cylinder := 300;
-         Result : Cylinder_Array;
          Has_Max : Boolean := False;
       begin
-         Result := SCAN (Requests, Start_Head, Up, Max_Cylinder);
-         for R of Result loop
+         for R of SCAN (Requests, Start_Head, Up, Max_Cylinder) loop
             if R = Max_Cylinder then
                Has_Max := True;
             end if;
@@ -522,11 +464,9 @@ package body Test_Disk_Scheduling is
       declare
          Requests : constant Cylinder_Array := (1 => 100, 2 => 200);
          Start_Head : constant Cylinder := 50;
-         Result : Cylinder_Array;
          Has_Max : Boolean := False;
       begin
-         Result := LOOK (Requests, Start_Head, Up);
-         for R of Result loop
+         for R of LOOK (Requests, Start_Head, Up) loop
             if R = 300 then
                Has_Max := True;
             end if;
@@ -539,12 +479,10 @@ package body Test_Disk_Scheduling is
          Requests : constant Cylinder_Array := (1 => 10, 2 => 20);
          Start_Head : constant Cylinder := 50;
          Max_Cylinder : constant Cylinder := 100;
-         Result : Cylinder_Array;
          Has_Zero : Boolean := False;
          Has_Max : Boolean := False;
       begin
-         Result := C_SCAN (Requests, Start_Head, Up, Max_Cylinder);
-         for R of Result loop
+         for R of C_SCAN (Requests, Start_Head, Up, Max_Cylinder) loop
             if R = 0 then
                Has_Zero := True;
             end if;
@@ -559,12 +497,10 @@ package body Test_Disk_Scheduling is
       declare
          Requests : constant Cylinder_Array := (1 => 10, 2 => 20, 3 => 30);
          Start_Head : constant Cylinder := 50;
-         Result : Cylinder_Array;
          Has_Zero : Boolean := False;
          Has_Max : Boolean := False;
       begin
-         Result := C_LOOK (Requests, Start_Head, Up);
-         for R of Result loop
+         for R of C_LOOK (Requests, Start_Head, Up) loop
             if R = 0 then
                Has_Zero := True;
             end if;
@@ -581,11 +517,9 @@ package body Test_Disk_Scheduling is
          Waiting_Queue : constant Cylinder_Array := (1 => 200);
          Start_Head : constant Cylinder := 50;
          Max_Cylinder : constant Cylinder := 300;
-         Result : Cylinder_Array;
          Has_Waiting : Boolean := False;
       begin
-         Result := F_SCAN (Active_Queue, Waiting_Queue, Start_Head, Up, Max_Cylinder);
-         for R of Result loop
+         for R of F_SCAN (Active_Queue, Waiting_Queue, Start_Head, Up, Max_Cylinder) loop
             if R = 200 then
                Has_Waiting := True;
             end if;
@@ -598,10 +532,8 @@ package body Test_Disk_Scheduling is
          Requests : constant Cylinder_Array (1..0) := (others => 0);
          Start_Head : constant Cylinder := 50;
          Max_Cylinder : constant Cylinder := 100;
-         Result : Cylinder_Array;
       begin
-         Result := SCAN (Requests, Start_Head, Up, Max_Cylinder);
-         Run_Test ("Empty_No_Error", Result'Length = 0);
+         Run_Test ("Empty_No_Error", SCAN (Requests, Start_Head, Up, Max_Cylinder)'Length = 0);
       end;
    end Test_Proven_False;
 
@@ -618,24 +550,20 @@ package body Test_Disk_Scheduling is
          Requests : constant Cylinder_Array := (1 => 10, 2 => 20, 3 => 30);
          Start_Head : constant Cylinder := 50;
          Max_Cylinder : constant Cylinder := 100;
-         SCAN_Result : Cylinder_Array;
-         CSCAN_Result : Cylinder_Array;
       begin
-         SCAN_Result := SCAN (Requests, Start_Head, Up, Max_Cylinder);
-         CSCAN_Result := C_SCAN (Requests, Start_Head, Up, Max_Cylinder);
-         Run_Test ("SCAN_vs_CSCAN_Differ", SCAN_Result'Length /= CSCAN_Result'Length);
+         Run_Test ("SCAN_vs_CSCAN_Differ", 
+                  SCAN (Requests, Start_Head, Up, Max_Cylinder)'Length /=
+                  C_SCAN (Requests, Start_Head, Up, Max_Cylinder)'Length);
       end;
       
       -- Test 2: LOOK vs C-LOOK
       declare
          Requests : constant Cylinder_Array := (1 => 10, 2 => 20, 3 => 30);
          Start_Head : constant Cylinder := 50;
-         LOOK_Result : Cylinder_Array;
-         CLOOK_Result : Cylinder_Array;
       begin
-         LOOK_Result := LOOK (Requests, Start_Head, Up);
-         CLOOK_Result := C_LOOK (Requests, Start_Head, Up);
-         Run_Test ("LOOK_vs_CLOOK_Differ", LOOK_Result'Length /= CLOOK_Result'Length);
+         Run_Test ("LOOK_vs_CLOOK_Differ", 
+                  LOOK (Requests, Start_Head, Up)'Length /=
+                  C_LOOK (Requests, Start_Head, Up)'Length);
       end;
       
       -- Test 3: SCAN vs LOOK
@@ -643,12 +571,10 @@ package body Test_Disk_Scheduling is
          Requests : constant Cylinder_Array := (1 => 10, 2 => 20, 3 => 30);
          Start_Head : constant Cylinder := 50;
          Max_Cylinder : constant Cylinder := 100;
-         SCAN_Result : Cylinder_Array;
-         LOOK_Result : Cylinder_Array;
       begin
-         SCAN_Result := SCAN (Requests, Start_Head, Up, Max_Cylinder);
-         LOOK_Result := LOOK (Requests, Start_Head, Up);
-         Run_Test ("SCAN_vs_LOOK_Differ", SCAN_Result'Length /= LOOK_Result'Length);
+         Run_Test ("SCAN_vs_LOOK_Differ", 
+                  SCAN (Requests, Start_Head, Up, Max_Cylinder)'Length /=
+                  LOOK (Requests, Start_Head, Up)'Length);
       end;
       
       -- Test 4: C-SCAN vs C-LOOK
@@ -656,12 +582,10 @@ package body Test_Disk_Scheduling is
          Requests : constant Cylinder_Array := (1 => 10, 2 => 20, 3 => 30);
          Start_Head : constant Cylinder := 50;
          Max_Cylinder : constant Cylinder := 100;
-         CSCAN_Result : Cylinder_Array;
-         CLOOK_Result : Cylinder_Array;
       begin
-         CSCAN_Result := C_SCAN (Requests, Start_Head, Up, Max_Cylinder);
-         CLOOK_Result := C_LOOK (Requests, Start_Head, Up);
-         Run_Test ("CSCAN_vs_CLOOK_Differ", CSCAN_Result'Length /= CLOOK_Result'Length);
+         Run_Test ("CSCAN_vs_CLOOK_Differ", 
+                  C_SCAN (Requests, Start_Head, Up, Max_Cylinder)'Length /=
+                  C_LOOK (Requests, Start_Head, Up)'Length);
       end;
    end Test_Comparisons;
 
@@ -678,10 +602,8 @@ package body Test_Disk_Scheduling is
          Requests : constant Cylinder_Array := (1 => 50, 2 => 50, 3 => 50, 4 => 100);
          Start_Head : constant Cylinder := 50;
          Max_Cylinder : constant Cylinder := 200;
-         Result : Cylinder_Array;
       begin
-         Result := SCAN (Requests, Start_Head, Up, Max_Cylinder);
-         Run_Test ("Edge_Duplicate_Requests", Result'Length > 0);
+         Run_Test ("Edge_Duplicate_Requests", SCAN (Requests, Start_Head, Up, Max_Cylinder)'Length > 0);
       end;
       
       -- Test 2: Request At Head
@@ -689,11 +611,9 @@ package body Test_Disk_Scheduling is
          Requests : constant Cylinder_Array := (1 => 50, 2 => 100, 3 => 150);
          Start_Head : constant Cylinder := 50;
          Max_Cylinder : constant Cylinder := 200;
-         Result : Cylinder_Array;
          Has_50 : Boolean := False;
       begin
-         Result := SCAN (Requests, Start_Head, Up, Max_Cylinder);
-         for R of Result loop
+         for R of SCAN (Requests, Start_Head, Up, Max_Cylinder) loop
             if R = 50 then
                Has_50 := True;
             end if;
@@ -706,10 +626,8 @@ package body Test_Disk_Scheduling is
          Requests : constant Cylinder_Array := (1 => 1000, 2 => 2000, 3 => 3000);
          Start_Head : constant Cylinder := 500;
          Max_Cylinder : constant Cylinder := 5000;
-         Result : Cylinder_Array;
       begin
-         Result := SCAN (Requests, Start_Head, Up, Max_Cylinder);
-         Run_Test ("Edge_Large_Numbers", Result'Length > 0);
+         Run_Test ("Edge_Large_Numbers", SCAN (Requests, Start_Head, Up, Max_Cylinder)'Length > 0);
       end;
    end Test_Edge_Cases;
 

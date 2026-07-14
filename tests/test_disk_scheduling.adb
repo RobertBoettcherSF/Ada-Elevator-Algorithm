@@ -7,6 +7,7 @@ with Disk_Scheduling;
 package body Test_Disk_Scheduling is
 
    use Disk_Scheduling;
+   use type Cylinder;
 
    -- Helper to check if two arrays are equal
    function Arrays_Equal (A, B : Cylinder_Array) return Boolean is

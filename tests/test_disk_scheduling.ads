@@ -1,4 +1,4 @@
--- Version: 0.01
+-- Version: 0.02
 -- Test specifications for Disk Scheduling Algorithms
 
 with Disk_Scheduling;
